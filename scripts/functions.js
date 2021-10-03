@@ -1,5 +1,5 @@
 const getItems = () => {
-  let itemJason = localStorage.getItem("items");
+  const itemJason = localStorage.getItem("items");
   try {
     return itemJason !== null ? JSON.parse(itemJason) : [];
   } catch (error) {
@@ -15,8 +15,26 @@ const toggleItems = (id) => {
   const item = items.find((item) => item.id == id);
   if (item !== undefined) {
     item.exist = !item.exist;
-    console.log(item);
   }
+};
+
+const renderItems = (items, filters)=> {
+  let filtered ;
+  filtered = items.filter((item)=>{
+    return item.title.toLowerCase().includes(filters.words.toLowerCase())
+  });
+  filtered = items.filter((item)=>{
+    if (filters.undoneItems) {
+      return item.exist
+    } else {
+      return true
+    }
+  })
+  worksArea.innerHTML = "";
+
+  filtered.forEach((item)=> {
+    worksArea.appendChild(createItemDOM(item));
+  });
 };
 
 const createItemDOM = (item) => {
@@ -48,20 +66,3 @@ const createItemDOM = (item) => {
   return itemEl;
 };
 
-const renderItems = (items, filters)=> {
-  let filtered = items.filter((item)=> {
-    return item.title.toLowerCase().includes(filters.words.toLowerCase());
-  });
-  filtered = items.filter((item)=>{
-    if (filters.undoneItems) {
-      return item.exist
-    } else {
-      return true
-    }
-  })
-  worksArea.innerHTML = "";
-
-  filtered.forEach((element)=> {
-    worksArea.appendChild(createItemDOM(element));
-  });
-};
