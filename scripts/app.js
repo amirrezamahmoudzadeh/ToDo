@@ -4,23 +4,23 @@ let items = getItems()
 let filters = {
   words: "",
   undoneItems : false ,
-  // sortBy : 'time'
 }
 
 renderItems(items, filters);
 
 document.querySelector("#search-input").addEventListener("input", (e) => {
   filters.words = e.target.value;
-  renderItems(items, filters);
+  renderItems(items, filters)
 });
 
 document.querySelector('#check-input').addEventListener('change', (e) => {
   filters.undoneItems = e.target.checked
-  renderProducts(products, filters)
+  renderItems(items, filters)
 })
 
 document.querySelector(".add-item").addEventListener("submit", (e) => {
-  e.preventDefault();
+  if (e.target.elements.addInput.value) {
+    e.preventDefault();
   const id = uuidv4()
   const time = moment().valueOf()
 
@@ -33,4 +33,7 @@ document.querySelector(".add-item").addEventListener("submit", (e) => {
   saveItems(items);
   renderItems(items, filters);
   e.target.elements.addInput.value = "";
+  } else {
+    return
+  }
 });
