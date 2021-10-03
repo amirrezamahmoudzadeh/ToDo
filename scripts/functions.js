@@ -23,7 +23,7 @@ const renderItems = (items, filters)=> {
   filtered = items.filter((item)=>{
     return item.title.toLowerCase().includes(filters.words.toLowerCase())
   });
-  filtered = items.filter((item)=>{
+  filtered = filtered.filter((item)=>{
     if (filters.undoneItems) {
       return item.exist
     } else {
@@ -65,4 +65,3 @@ const createItemDOM = (item) => {
   });
   return itemEl;
 };
-
